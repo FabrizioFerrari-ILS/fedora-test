@@ -2,23 +2,33 @@
 
 set -ouex pipefail
 
-### Install packages
+SERVER_PACKAGES=(
+    mc
+    hunspell-it
+    qemu
+    cockpit
+    cockpit-podman
+    fastfetch
+    tailscale
+    libreoffice
+    qt6-qdbusviewer
+)
 
-# Packages can be installed from any enabled yum repo on the image.
-# RPMfusion repos are available by default in ublue main images
-# List of rpmfusion packages can be found here:
-# https://mirrors.rpmfusion.org/mirrorlist?path=free/fedora/updates/39/x86_64/repoview/index.html&protocol=https&redirect=1
+dnf5 install -y "${SERVER_PACKAGES[@]}"
 
-# this installs a package from fedora repos
-dnf5 install -y tmux 
 
-# Use a COPR Example:
-#
-# dnf5 -y copr enable ublue-os/staging
-# dnf5 -y install package
-# Disable COPRs so they don't end up enabled on the final image:
-# dnf5 -y copr disable ublue-os/staging
+dnf5 -y copr enable lizardbyte/beta
+dnf5 -y install Sunshine
+dnf5 -y copr disable lizardbyte/beta
 
-#### Example for enabling a System Unit File
 
 systemctl enable podman.socket
+systemctl enable cockpit.socket
+
+
+BUILD_DATE=$(date +'%Y%m%d')
+cat > /etc/xdg/kcm-about-distrorc <<EOF
+[General]
+Variant=ILS test ${BUILD_DATE}
+END
+EOF
