@@ -3,11 +3,11 @@ set -ouex pipefail
 
 PACKAGES=(
     mc
+    fastfetch
+    htop
     hunspell-it
-    qemu
     cockpit
     cockpit-podman
-    fastfetch
     qt6-qdbusviewer
     distrobox
 )
@@ -17,6 +17,8 @@ dnf5 install -y "${PACKAGES[@]}"
 #dnf5 -y copr enable lizardbyte/beta
 #dnf5 -y install Sunshine
 #dnf5 -y copr disable lizardbyte/beta
+
+dnf5 clean all
 
 systemctl enable podman.socket
 systemctl enable cockpit.socket
