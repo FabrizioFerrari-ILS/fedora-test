@@ -1,17 +1,15 @@
 ---
 name: Build container image
 on:
-  pull_request:
-    branches:
-      - main
   schedule:
     - cron: "05 05 * * 1"
-  push:
-    branches:
-      - main
-    paths-ignore:
-      - "**/README.md"
   workflow_dispatch:
+    inputs:
+      install_libreoffice:
+        description: "LibreOffice"
+        required: false
+        default: false
+        type: boolean
 
 env:
   IMAGE_DESC: "My Customized Universal Blue Image"
@@ -62,7 +60,7 @@ jobs:
         continue-on-error: true
         with:
           target-dir: /var/lib/containers
-          mount-opts: compress-force=zstd:2
+          mount-opts: compress-force=zstd:3
 
       - name: Get current date
         id: date
@@ -117,6 +115,8 @@ jobs:
           image: ${{ env.IMAGE_NAME }}
           tags: ${{ steps.metadata.outputs.tags }}
           labels: ${{ steps.metadata.outputs.labels }}
+          build-args: |
+            INSTALL_LIBREOFFICE=${{ github.event.inputs.install_libreoffice }}
           oci: false
 
       # Rechunk is a script that we use on Universal Blue to make sure there isnt a single huge layer when your image gets published.
