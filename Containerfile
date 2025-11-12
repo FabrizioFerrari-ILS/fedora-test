@@ -1,6 +1,7 @@
 FROM scratch AS ctx
-COPY build_files /
-RUN chmod +x /*.sh
+WORKDIR /
+COPY build_files .
+RUN chmod +x ./*.sh
 
 FROM quay.io/fedora/fedora-kinoite:latest
 
