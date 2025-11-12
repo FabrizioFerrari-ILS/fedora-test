@@ -8,7 +8,17 @@ on:
       install_libreoffice:
         description: "LibreOffice"
         required: false
-        default: false
+        default: true
+        type: boolean
+      install_gimp:
+        description: "GIMP"
+        required: false
+        default: true
+        type: boolean
+      install_sunshine:
+        description: "Sunshine"
+        required: false
+        default: true
         type: boolean
 
 env:
@@ -117,6 +127,8 @@ jobs:
           labels: ${{ steps.metadata.outputs.labels }}
           build-args: |
             INSTALL_LIBREOFFICE=${{ github.event.inputs.install_libreoffice }}
+            INSTALL_GIMP=${{ github.event.inputs.install_gimp }}
+            INSTALL_SUNSHINE=${{ github.event.inputs.install_sunshine }}
           oci: false
 
       # Rechunk is a script that we use on Universal Blue to make sure there isnt a single huge layer when your image gets published.
