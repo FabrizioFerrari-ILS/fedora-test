@@ -1,4 +1,4 @@
-FROM scratch AS ctx
+FROM alpine AS ctx
 WORKDIR /
 COPY build_files .
 RUN chmod +x ./*.sh
