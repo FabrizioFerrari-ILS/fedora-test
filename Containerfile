@@ -16,9 +16,9 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx --mount=type=cache,dst=/var/
     /ctx/runner.sh INSTALL_LIBREOFFICE /ctx/libreoffice.sh
 
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx --mount=type=cache,dst=/var/cache --mount=type=cache,dst=/var/log --mount=type=tmpfs,dst=/tmp \
-    /ctx/runner.sh INSTALL_LIBREOFFICE /ctx/gimp.sh
+    /ctx/runner.sh INSTALL_GIMP /ctx/gimp.sh
 
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx --mount=type=cache,dst=/var/cache --mount=type=cache,dst=/var/log --mount=type=tmpfs,dst=/tmp \
-    /ctx/runner.sh INSTALL_LIBREOFFICE /ctx/sunshine.sh
+    /ctx/runner.sh INSTALL_SUNSHINE /ctx/sunshine.sh
 
 RUN bootc container lint

@@ -13,7 +13,6 @@ PACKAGES=(
 )
 
 dnf5 -y install "${PACKAGES[@]}"
-dnf5 -y clean all
 
 systemctl enable podman.socket
 systemctl enable cockpit.socket
